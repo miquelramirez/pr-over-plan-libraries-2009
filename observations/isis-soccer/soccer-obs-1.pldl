@@ -1,0 +1,7 @@
+(define (sequence soccer-obs-frontal-attack-1)
+	(:library isis-soccer)
+	(:observed
+		(run-forward)
+		(kick)
+	)
+)

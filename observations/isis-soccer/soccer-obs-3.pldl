@@ -1,0 +1,11 @@
+(define (sequence soccer-obs-frontal-attack-3)
+	(:library isis-soccer)
+	(:observed
+		(run-forward)
+		(turn-away)
+		(kick-short)
+		(run-to-ball)
+		(turn-to-goal)
+		(kick)
+	)
+)

@@ -1,0 +1,26 @@
+;; Inspired by ISIS Soccer team at RoboCup'97 SOAR Control Rules
+(define
+	(library fall-back)
+	
+	(:tasks
+		fall-back
+		position-goal-keeper
+		run-backwards
+		move-to-flank
+		wait	
+	)
+	(:top-level
+		fall-back
+	)
+
+	(:method fall-back-1
+		:implements	(fall-back)
+		:steps		(position-goal-keeper run-backwards wait)
+		:constraints	((requires wait run-backwards))
+	)
+	(:method fall-back-2
+		:implements	(fall-back)
+		:steps		(move-to-flank wait position-goal-keeper)
+		:constraints	((requires wait move-to-flank))
+	)
+)	

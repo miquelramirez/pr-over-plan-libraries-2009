@@ -1,0 +1,64 @@
+;; Inspired by ISIS Soccer team at RoboCup'97 SOAR Control Rules
+(define
+	(library flank-attack)
+	
+	(:tasks
+		flank-attack
+		flank-advance
+		pass-to-flank
+		move-to-flank
+		run-forward
+		kick
+		kick-short
+		turn-to-player
+		turn-to-flank
+		dribble
+		pass-forward
+		turn-away
+		run-to-ball
+		kick-long
+	)
+	(:top-level
+		flank-attack
+	)
+
+	(:method flank-attack-1
+		:implements	(flank-attack)
+		:steps		(flank-advance pass-to-flank )
+		:constraints	((requires pass-to-flank flank-advance))
+	)
+	(:method flank-attack-2
+		:implements	(flank-attack)
+		:steps		(flank-advance dribble)
+	)
+	(:method flank-attack-3
+		:implements	(flank-attack)
+		:steps		(flank-advance pass-forward)
+		:constraints	((requires pass-forward flank-advance))
+	)
+	(:method flank-run
+		:implements	(flank-advance)
+		:steps		(move-to-flank run-forward)
+		:constraints	((requires run-forward move-to-flank))
+	)
+	(:method pass-to-player
+		:implements	(pass-to-flank pass-forward)
+		:steps		(turn-to-player kick)
+		:constraints	((requires kick turn-to-player))
+	)
+	(:method long-pass-flank
+		:implements	(pass-to-flank)
+		:steps		(turn-to-flank kick)
+		:constraints	((requires kick turn-to-flank))
+	)
+	(:method short-dribble
+		:implements	(dribble)
+		:steps		(turn-away kick-short run-to-ball)
+		:constraints	((requires run-to-ball kick-short) (requires kick-short turn-away))
+	)
+	(:method long-dribble
+		:implements	(dribble)
+		:steps		(turn-away kick-long run-to-ball)
+		:constraints	((requires run-to-ball kick-long) (requires kick-long turn-away))
+	)
+)	

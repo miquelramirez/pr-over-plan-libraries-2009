@@ -1,0 +1,19 @@
+(define (library test)
+	(:tasks T t1 t2 A B C D)
+	(:top-level T)
+	(:method m
+		:implements	(T)
+		:steps		(t1 t2)
+		:constraints	((requires t2 t1))
+	)
+	(:method m1
+		:implements	(t1)
+		:steps		(A B)
+		:constraints	((requires B A))
+	)
+	(:method m2
+		:implements	(t2)
+		:steps		(C D)
+		:constraints	((requires D C))
+	)
+)

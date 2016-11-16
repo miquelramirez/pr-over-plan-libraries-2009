@@ -1,0 +1,40 @@
+;; Inspired by ISIS Soccer team at RoboCup'97 SOAR Control Rules
+(define
+	(library fight-back)
+	
+	(:tasks
+		fight-back
+		run-forward
+		kick
+		turn-to-player
+		turn-to-flank
+		dribble
+		pass-forward
+		shoot-to-goal
+		turn-to-front
+		turn-away
+		kick-short
+		run-to-ball
+		kick-long
+		turn-to-goal
+		kick-out
+		intercept
+		position-goal-keeper
+		run-backwards
+		wait
+		move-to-flank	
+	)
+	(:top-level
+		fight-back
+	)
+	(:method fight-back-1
+		:implements	(fight-back)
+		:steps		(intercept kick-out)
+		:constraints	((requires kick-out intercept))
+	)
+	(:method fight-back-2
+		:implements	(fight-back)
+		:steps		(run-to-ball intercept pass-forward)
+		:constraints	((requires intercept run-to-ball) (requires pass-forward intercept))
+	)
+)	

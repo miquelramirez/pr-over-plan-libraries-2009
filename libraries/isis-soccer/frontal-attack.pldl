@@ -1,0 +1,63 @@
+;; Inspired by ISIS Soccer team at RoboCup'97 SOAR Control Rules
+(define
+	(library frontal-attack)
+	
+	(:tasks
+		frontal-attack
+		run-forward
+		pass-forward
+		shoot-to-goal
+		dribble
+		;; primitives
+		turn-to-front 
+		kick
+		turn-away
+		kick-short
+		run-to-ball
+		kick-long
+		turn-to-goal
+	)
+	(:top-level
+		frontal-attack
+	)
+
+	(:method frontal-supported-attack
+		:implements	(frontal-attack)
+		:steps		(run-forward pass-forward)
+		:constraints	((requires pass-forward run-forward))
+	)
+	(:method frontal-supported-attack-and-shoot
+		:implements	(frontal-attack)
+		:steps		(run-forward pass-forward shoot-to-goal)
+		:constraints	((requires pass-forward run-forward) (requires shoot-to-goal pass-forward))
+	)
+	(:method long-pass-forward
+		:implements	(pass-forward)
+		:steps		(turn-to-front kick)
+		:constraints	((requires kick turn-to-front))
+	)
+	(:method frontal-unsupported-attack
+		:implements	(frontal-attack)
+		:steps		(run-forward dribble)
+	)
+	(:method frontal-unsupported-attack-and-shoot
+		:implements	(frontal-attack)
+		:steps		(run-forward dribble shoot-to-goal)
+		:constraints	((requires shoot-to-goal dribble))
+	)
+	(:method short-dribble
+		:implements	(dribble)
+		:steps		(turn-away kick-short run-to-ball)
+		:constraints	((requires run-to-ball kick-short) (requires kick-short turn-away))
+	)
+	(:method long-dribble
+		:implements	(dribble)
+		:steps		(turn-away kick-long run-to-ball)
+		:constraints	((requires run-to-ball kick-long) (requires kick-long turn-away))
+	)
+	(:method shoot-at-goal
+		:implements	(shoot-to-goal)
+		:steps		(turn-to-goal kick)
+		:constraints	((requires turn-to-goal kick))
+	)
+)	
